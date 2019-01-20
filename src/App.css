@@ -19,7 +19,7 @@
   height: 1.5em;
   display: block;
 
-  animation-iteration-count: infinite;
+  animation-iteration-count: initial;
 }
 
 .App-logo {
