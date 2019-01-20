@@ -1,14 +1,5 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
+  
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,15 +9,45 @@
   color: white;
 }
 
+.App-all-users {
+  list-style: none;
+  /* animation: Users-spin infinite 1s linear; */
+}
+
+.App-all-users li {
+  padding: 0.7em;
+  height: 1.5em;
+  display: block;
+
+  animation-iteration-count: infinite;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-all-users li.winner {
+  animation-name: slide-in;
+  
+}
+
+.App-all-users li.almost-winner {
+  animation-name: slide-out;
+}
+
+@keyframes slide-in {
+  0%   { opacity: 0; }
+  50% {opacity: 0.5;}
+  100% {  opacity: 1;}
+}
+
+@keyframes slide-out {
+  0%   { opacity: 1; }
+  50% {opacity: 0.5;}
+  100% { opacity: 0; }
 }
