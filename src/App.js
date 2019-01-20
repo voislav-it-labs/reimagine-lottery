@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
-import faker from 'faker';
-import { timer, interval } from 'rxjs';
+// import faker from 'faker';
+import { interval } from 'rxjs';
 import { take, tap, finalize } from 'rxjs/operators';
 
-const users = [];
-for (let i = 0; i < 5; i++) {
-  users.push(faker.name.firstName() + " " + faker.name.lastName());
-}
-// const users = [
-//   'Voislav Mishevski',
-//   'Blagoj Janev',
-//   'Aleksandra Vinokikj',
-//   'Ivan Klandev',
-//   'Aleksandra Koceva'
-// ];
+// const users = [];
+// for (let i = 0; i < 5; i++) {
+//   users.push(faker.name.firstName() + " " + faker.name.lastName());
+// }
+const users = [
+  'Voislav Mishevski',
+  'Blagoj Janev',
+  'Aleksandra Vinokikj',
+  'Ivan Klandev',
+  'Aleksandra Koceva'
+];
 
 const USE_DELAYED_STOP = true;
 const INITIAL_SPEED = 250;
@@ -40,7 +40,7 @@ class User extends Component {
   }
 
   _animate() {
-    this.setState({entering: true});
+    setTimeout(() => this.setState({entering: true}));
     setTimeout(() => {
       this.setState({entering: false});
     }, this.props.speed);
@@ -50,19 +50,26 @@ class User extends Component {
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
+  }
 
+  componentWillMount() {
     const winnerIndex = Math.round(users.length/2);
     const winner = users[winnerIndex]
-    this.state = {
+    this.setState({
       users: users,
       winners: [],
       potentialWinner: winner,
       speed: INITIAL_SPEED,
       started: false,
       stopping: false
-    };
+    });
 
-    document.addEventListener('keyup', () => this.toggleStarted());
+    document.addEventListener('keyup', this.onKeySpaceEnter);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.onKeySpaceEnter);
   }
 
   render() {
@@ -71,15 +78,19 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <button onClick={this.toggleStarted}>{started ? 'Stop' : 'Start'}</button>
+          <button type="button" className={started ? 'btn btn-stop' : 'btn btn-start'} onClick={this.toggleStarted}>
+            <h3>{started ? 'Stop' : 'Start'}</h3>
+          </button>
         </div>
-        {started && <ul className="App-all-users">
-          <User name={potentialWinner} winner={true} speed={speed/2}></User>
-        </ul>}
+        <div className="">
+          {started && <ul className="App-all-users">
+            <User name={potentialWinner} winner={true} speed={speed/2}></User>
+          </ul>}
+        </div>
         {!!winners.length && (
           <div>
             <div>Winners:</div>
-            {winners.map(winner => <div>{winner}</div>)}
+            {winners.map(winner => <div key={winner}>{winner}</div>)}
           </div>
         )}
       </div>
@@ -138,7 +149,7 @@ class App extends Component {
         winners: [...state.winners, state.potentialWinner],
         started: false,
         stopping: false,
-        users: state.users.filter(u => u === state.potentialWinner),
+        users: state.users.filter(u => u !== state.potentialWinner),
         speed: INITIAL_SPEED
       }
     });
@@ -175,6 +186,13 @@ class App extends Component {
       console.log('decreesing speed');
     });
 
+  }
+
+  onKeySpaceEnter = (event) => {
+    // only on space
+    if (event.keyCode === 32) {
+      this.toggleStarted()
+    }
   }
 
 }
