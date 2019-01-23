@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import { interval } from 'rxjs';
 import { take, tap, finalize } from 'rxjs/operators';
-import ReImagineLogo from './ReImagine.png';
 import { Uploader, CANDIDATES_STORAGE_KEY } from './Uploader';
+import ReImagineLogo from './ReImagine.png';
 
 const USE_DELAYED_STOP = true;
 const INITIAL_SPEED = 250;
@@ -78,23 +78,26 @@ class App extends Component {
 
     return (
       <div className="App">
+      <img className="App-logo" src={ReImagineLogo} alt="Logo" />
       {renderUpload && <Uploader />}
       {!renderUpload && (
-        <div>
-          <div>
-            {!started && <button type="button" className={btnClass} onClick={this.toggleStarted}>
-              <h3>{started ? 'Stop' : 'Start'}</h3>
-            </button>}
-          </div>
-          <div className="">
-            {started && <ul className="App-all-users">
-              <User name={potentialWinner} winner={true} speed={speed/2}></User>
-            </ul>}
+        <div className="App-container">
+          <div className="App-btn">
+            <div>
+              { <button type="button" className={btnClass} onClick={this.toggleStarted}>
+                <h3>{started ? 'Stop' : 'Start'}</h3>
+              </button>}
+            </div>
+            <div className="">
+              {started && <ul className="App-all-users">
+                <User name={potentialWinner} winner={true} speed={speed/2}></User>
+              </ul>}
+            </div>
           </div>
           {!!winners.length && (
             <div>
-              <div>Winners:</div>
-              {winners.map(winner => <div key={winner}>{winner}</div>)}
+              <h2>Winners:</h2>
+              {winners.map(winner => <div className="App-winners" key={winner}>{winner}</div>)}
             </div>
           )}
         </div>

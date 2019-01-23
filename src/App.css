@@ -1,13 +1,51 @@
 .App {
   
-  min-height: 80vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 20vh;
+  padding-top: 10vh;
   /* justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+h3 {
+  font-size: 20px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.App-container {
+  width: 90vw;
+  text-align: center;
+}
+
+.App-winners {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.App-winners:before {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 40px;
+  background-color: #fff;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+.App-winners:nth-child(2):before {
+  display: none;
+}
+
+.App-btn {
+  min-height: 180px;
 }
 
 .App-all-users {
@@ -25,8 +63,8 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  height: 10vmin;
+  margin-bottom: 20vh;
 }
 
 .App-link {
@@ -35,7 +73,7 @@
 
 .App-all-users li.winner {
   animation-name: slide-in;
-  
+
 }
 
 .App-all-users li.almost-winner {
@@ -43,24 +81,23 @@
 }
 
 .btn {
-  width: 10em;
-  height: 10em;
-  border-radius: 50%;
+  width: 15em;
+  height: 4em;
+  /* border-radius: 50%; */
 }
 
 .btn.btn-start {
-  background-color: rgb(0, 179, 0);
-  box-shadow: 0 0 1em rgb(0, 179, 0);
-  border: 1px solid rgb(0, 179, 0);
+  background-color: #f8dd1f;
+  box-shadow: 0 0 1em #f8dd1f;
+  border: 1px solid #f8dd1f;
+
 }
 
 .btn.btn-stop {
-  background-color: rgb(230, 46, 0);
-  box-shadow: 0 0 1em rgb(230, 46, 0);
-  border: 1px solid rgb(230, 46, 0);
-
-  color: white;
-
+  background-color: #fb5d5d;
+  box-shadow: 0 0 1em #fb5d5d;
+  border: 1px solid #fb5d5d;
+  color: #fff;
 }
 
 .btn.fade-out {
@@ -69,13 +106,29 @@
 }
 
 @keyframes slide-in {
-  0%   { opacity: 0; }
-  50% {opacity: 0.5;}
-  100% {  opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes slide-out {
-  0%   { opacity: 1; }
-  50% {opacity: 0.5;}
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
