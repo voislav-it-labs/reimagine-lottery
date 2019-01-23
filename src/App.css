@@ -10,6 +10,11 @@
   color: white;
 }
 
+h2 {
+  font-size: 60px;
+  margin-top: 0;
+}
+
 h3 {
   font-size: 20px;
   text-transform: uppercase;
@@ -18,6 +23,7 @@ h3 {
 
 ul {
   padding-left: 0;
+  margin-bottom: 0;
 }
 
 .App-container {
@@ -28,6 +34,7 @@ ul {
 .App-winners {
   display: inline-block;
   margin-left: 20px;
+  font-size: 50px;
 }
 
 .App-winners:before {
@@ -45,7 +52,7 @@ ul {
 }
 
 .App-btn {
-  min-height: 180px;
+  min-height: 210px;
 }
 
 .App-all-users {
@@ -57,6 +64,8 @@ ul {
 .App-all-users li {
   padding: 0.7em;
   height: 1.5em;
+  font-size: 50px;
+  padding: 0;
   display: block;
 
   animation-iteration-count: initial;
@@ -88,15 +97,13 @@ ul {
 
 .btn.btn-start {
   background-color: #f8dd1f;
-  box-shadow: 0 0 1em #f8dd1f;
   border: 1px solid #f8dd1f;
 
 }
 
 .btn.btn-stop {
-  background-color: #fb5d5d;
-  box-shadow: 0 0 1em #fb5d5d;
-  border: 1px solid #fb5d5d;
+  background-color: #8b3232;
+  border: 1px solid #8b3232;
   color: #fff;
 }
 
