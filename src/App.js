@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-// import faker from 'faker';
 import { interval } from 'rxjs';
 import { take, tap, finalize } from 'rxjs/operators';
-
-// const users = [];
-// for (let i = 0; i < 5; i++) {
-//   users.push(faker.name.firstName() + " " + faker.name.lastName());
-// }
-const users = [
-  'Voislav Mishevski',
-  'Blagoj Janev',
-  'Aleksandra Vinokikj',
-  'Ivan Klandev',
-  'Aleksandra Koceva'
-];
+import ReImagineLogo from './ReImagine.png';
+import { Uploader, CANDIDATES_STORAGE_KEY } from './Uploader';
 
 const USE_DELAYED_STOP = true;
 const INITIAL_SPEED = 250;
@@ -54,6 +43,11 @@ class App extends Component {
   }
 
   componentWillMount() {
+    let usersStr = localStorage.getItem(CANDIDATES_STORAGE_KEY);
+    if (!usersStr) {
+      usersStr = "[]";
+    }
+    const users = JSON.parse(usersStr);
     const winnerIndex = Math.round(users.length/2);
     const winner = users[winnerIndex]
     this.setState({
@@ -62,7 +56,7 @@ class App extends Component {
       potentialWinner: winner,
       speed: INITIAL_SPEED,
       started: false,
-      stopping: false
+      stopping: false,
     });
 
     document.addEventListener('keyup', this.onKeySpaceEnter);
@@ -73,26 +67,38 @@ class App extends Component {
   }
 
   render() {
-    const {winners, potentialWinner, speed, started} = this.state;
+    const {winners, potentialWinner, speed, started, starting} = this.state;
+
+    let btnClass = started ? 'btn btn-stop' : 'btn btn-start';
+    if (starting) {
+      btnClass += ' fade-out';
+    }
+
+    const renderUpload = window.location.pathname === "/config";
 
     return (
       <div className="App">
+      {renderUpload && <Uploader />}
+      {!renderUpload && (
         <div>
-          <button type="button" className={started ? 'btn btn-stop' : 'btn btn-start'} onClick={this.toggleStarted}>
-            <h3>{started ? 'Stop' : 'Start'}</h3>
-          </button>
-        </div>
-        <div className="">
-          {started && <ul className="App-all-users">
-            <User name={potentialWinner} winner={true} speed={speed/2}></User>
-          </ul>}
-        </div>
-        {!!winners.length && (
           <div>
-            <div>Winners:</div>
-            {winners.map(winner => <div key={winner}>{winner}</div>)}
+            {!started && <button type="button" className={btnClass} onClick={this.toggleStarted}>
+              <h3>{started ? 'Stop' : 'Start'}</h3>
+            </button>}
           </div>
-        )}
+          <div className="">
+            {started && <ul className="App-all-users">
+              <User name={potentialWinner} winner={true} speed={speed/2}></User>
+            </ul>}
+          </div>
+          {!!winners.length && (
+            <div>
+              <div>Winners:</div>
+              {winners.map(winner => <div key={winner}>{winner}</div>)}
+            </div>
+          )}
+        </div>
+      )}
       </div>
     );
   }
@@ -174,7 +180,6 @@ class App extends Component {
     interval(500).pipe(
       take(countOfNextIterations),
       tap(() => {
-        console.log('ddd')
         this.setState((state) => ({speed: state.speed + increase}));
       }),
       finalize(() => {
@@ -191,7 +196,8 @@ class App extends Component {
   onKeySpaceEnter = (event) => {
     // only on space
     if (event.keyCode === 32) {
-      this.toggleStarted()
+      this.setState({starting: true});
+      setTimeout(this.toggleStarted, 1000);
     }
   }
 

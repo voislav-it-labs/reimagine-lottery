@@ -1,0 +1,11 @@
+.Uploader {
+
+}
+
+.Uploader .Uploader-back {
+    margin: 2em;
+}
+
+.Uploader .Uploader-candidate {
+    margin: 0.5em 0;
+}
